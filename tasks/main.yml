@@ -12,8 +12,6 @@
     name: "{{ __oracle_client_user }}"
     uid: "{{ __oracle_client_user_id }}"
     group: "{{ __oracle_client_group }}"
-    groups: "{{ __oracle_client_group }}"
-    append: yes
 
 - name: Check If Oracle Client Is Installed.
   command: /usr/local/bin/dbhome
