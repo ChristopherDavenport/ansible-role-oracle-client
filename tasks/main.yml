@@ -1,5 +1,20 @@
 ---
 
+- name: Include Operating System Variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - "default.yml"
+
+- name: Install Dependencies
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ __oracle_client_dependencies | default([]) }}"
+
 - name: Creating Oracle Client Install Group
   group:
     state: present

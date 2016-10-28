@@ -1,0 +1,16 @@
+---
+
+__oracle_client_dependencies:
+  - binutils
+  - compat-libcap1
+  - gcc
+  - gcc-c++
+  - glibc
+  - glibc-devel
+  - ksh
+  - libgcc
+  - libstdc++
+  - libstdc++-devel
+  - libaio
+  - libaio-devel
+  - make
