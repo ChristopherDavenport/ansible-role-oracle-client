@@ -1,0 +1,26 @@
+---
+
+galaxy_info:
+  author: ChristopherDavenport
+  description: Oracle Client Installer
+  company: Eckerd College
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+  galaxy_tags:
+    - system
+    - development
+    - installer
+    - oracle
+    - oracle-client
+    - client
+    - db
+    - database
+    - sql
+    - web
+
+dependencies: []
