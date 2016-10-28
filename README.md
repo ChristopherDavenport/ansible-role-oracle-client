@@ -1,5 +1,6 @@
 # Universal Oracle Client
 
+[![Build Status](https://travis-ci.org/ChristopherDavenport/ansible-role-oracle-client.svg?branch=master)](https://travis-ci.org/ChristopherDavenport/ansible-role-oracle-client)
 
 This is the build from the comprehensive oracle-client, you will need to
 supply the zip file for the 64 bit client to to to the files directory.

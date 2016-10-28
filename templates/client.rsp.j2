@@ -1,0 +1,30 @@
+
+oracle.install.responseFileVersion=/oracle/install/rspfmt_clientinstall_response_schema_v12.1.0
+
+ORACLE_HOSTNAME={{ oracle_hostname | default('') }}
+
+UNIX_GROUP_NAME={{ __oracle_client_group }}
+
+INVENTORY_LOCATION={{ oracle_client_inventory_location }}
+
+{# This is our looping mechanism for languages #}
+SELECTED_LANGUAGES={% for language in oracle_client_selected_languages %}{{ language }}{% if not loop.last %},{% endif %}{% endfor %}
+
+{# Complete path of the Oracle Home #}
+ORACLE_HOME={{ oracle_client_oracle_home }}
+
+{# Complete path of the Oracle Base #}
+ORACLE_BASE={{ oracle_client_oracle_base }}
+
+{# Install Type of the Installation #}
+oracle.install.client.installType={{ oracle_client_install_type }}
+
+{# Custom Components To Include if Install Type is Custom #}
+oracle.install.client.customComponents={% for component in oracle_client_custom_install_components %}oracle.{{ component }}:{{ oracle_client_version }}{% if not loop.last %},{% endif %}{% endfor %}
+
+
+{# The scheduler hostname if the scheduler component was installed #}
+oracle.install.client.schedulerAgentHostName={{ oracle_client_scheduler_agent_hostname | default('') }}
+
+{# The port on the scheduler agent #}
+oracle.install.client.schedulerAgentPortNumber={{ oracle_client_scheduler_agent_port }}

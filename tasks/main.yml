@@ -1,1 +1,6 @@
 ---
+
+- name: Display That Template Is Correct
+  template:
+    dest: /tmp/client.rsp
+    src: client.rsp.j2
