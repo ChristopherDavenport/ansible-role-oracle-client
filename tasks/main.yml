@@ -1,5 +1,38 @@
 ---
 
+- name: Creating Oracle Client Install Group
+  group:
+    state: present
+    name: "{{ __oracle_client_group }}"
+    gid: "{{ __oracle_client_group_id }}"
+
+- name: Creating Oracle User
+  user:
+    state: present
+    name: "{{ __oracle_client_user }}"
+    uid: "{{ __oracle_client_user_id }}"
+    group: "{{ __oracle_client_group }}"
+    groups: "{{ __oracle_client_group }}"
+    append: yes
+
+- name: Check If Oracle Client Is Installed.
+  command: /usr/local/bin/dbhome
+  register: __oracle_client_init_dbhome
+  changed_when: False
+  ignore_errors: True
+
+- debug: var=__oracle_client_init_dbhome
+
+- debug: var=oracle_client_oracle_home
+
+- name: Set Whether Installation Is Already Finished
+  set_fact:
+    __oracle_client_installed:
+      - __oracle_client_init_dbhome|succeeded
+      - __oracle_client_init_dbhome == oracle_client_oracle_home
+
+- debug: var=__oracle_client_installed
+
 - name: Display That Template Is Correct
   template:
     dest: /tmp/client.rsp
