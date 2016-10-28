@@ -1,7 +1,8 @@
 ---
 
 __oracle_client_dependencies:
-  - binutils
+  - libc6
+  - libc6-dev
   - compat-libcap1
   - gcc
   - g++
