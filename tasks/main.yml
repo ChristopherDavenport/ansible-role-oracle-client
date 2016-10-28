@@ -27,9 +27,8 @@
 
 - name: Set Whether Installation Is Already Finished
   set_fact:
-    __oracle_client_installed:
-      - __oracle_client_init_dbhome|succeeded
-      - __oracle_client_init_dbhome == oracle_client_oracle_home
+    __oracle_client_installed: "{{ __oracle_client_init_dbhome|succeeded and
+      __oracle_client_init_dbhome == oracle_client_oracle_home }}"
 
 - debug: var=__oracle_client_installed
 
