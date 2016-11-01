@@ -28,24 +28,7 @@
     uid: "{{ __oracle_client_user_id }}"
     group: "{{ __oracle_client_group }}"
 
-- name: Check If Oracle Client Is Installed.
-  command: /usr/local/bin/dbhome
-  register: __oracle_client_init_dbhome
-  changed_when: False
-  ignore_errors: True
-
-- debug: var=__oracle_client_init_dbhome
-
-- debug: var=oracle_client_oracle_home
-
-- name: Set Whether Installation Is Already Finished
-  set_fact:
-    __oracle_client_installed: "{{ __oracle_client_init_dbhome|succeeded and
-      __oracle_client_init_dbhome == oracle_client_oracle_home }}"
-
-- debug: var=__oracle_client_installed
-
-- name: Display That Template Is Correct
-  template:
-    dest: /tmp/client.rsp
-    src: client.rsp.j2
+- name: Install Oracle Home
+  include: install.yml
+  static: yes
+  when: oracle_client_install

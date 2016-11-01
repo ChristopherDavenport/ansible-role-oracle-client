@@ -1,5 +1,6 @@
 ---
 
+oracle_client_install: False
 # This can force the variable to a specific hostname if this is being
 # installed on a machine with multiple hostnames. Otherwise the installer
 # takes for first hostname found.
@@ -38,15 +39,16 @@ oracle_client_inventory_location: /u01/app/oraInventory
 oracle_client_selected_languages:
   - en
 
-oracle_client_oracle_home: /u01/app/oracle/product/12.1.0/client_1
-oracle_client_oracle_base: /u01/app/oracle
+oracle_client_oracle_app_base: /u01/app
+oracle_client_oracle_base: "{{ oracle_client_oracle_app_base }}/oracle"
+oracle_client_oracle_home: "{{ oracle_client_oracle_base}}/product/12.1.0/client_1"
 
 # Oracle Client Install Type - Must Be Exactly One of These
 #  - InstantClient
 #  - Administrator
 #  - Runtime
 #  - Custom
-oracle_client_install_type: InstantClient
+oracle_client_install_type: Custom
 
 # sqlj              --> "Oracle SQLJ"
 # rdbms.util        --> "Oracle Database Utilities"
@@ -80,6 +82,12 @@ oracle_client_scheduler_agent_hostname: ""
 oracle_client_scheduler_agent_port: 1500
 
 oracle_client_version: 12.1.0.2.0
+
+oracle_client_zip: linuxamd64_12102_client.zip
+
+oracle_client_tmp_install_storage: /tmp/oracleclient
+
+
 
 # These are fairly constant values
 __oracle_client_user: oracle
