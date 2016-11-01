@@ -9,5 +9,5 @@ __oracle_client_dependencies:
   - g++
   - ksh
   - libaio1
-  - libaio-devel
+  - libaio-dev
   - make
