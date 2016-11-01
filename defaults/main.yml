@@ -52,7 +52,7 @@ oracle_client_oracle_home: "{{ oracle_client_oracle_base}}/product/12.1.0/client
 #  - Administrator
 #  - Runtime
 #  - Custom
-oracle_client_install_type: Custom
+oracle_client_install_type: InstantClient
 
 # sqlj              --> "Oracle SQLJ"
 # rdbms.util        --> "Oracle Database Utilities"
