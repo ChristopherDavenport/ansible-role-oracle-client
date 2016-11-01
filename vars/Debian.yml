@@ -8,9 +8,6 @@ __oracle_client_dependencies:
   - gcc
   - g++
   - ksh
-  - libgcc
-  - libstdc++
-  - libstdc++-devel
-  - libaio
+  - libaio1
   - libaio-devel
   - make
