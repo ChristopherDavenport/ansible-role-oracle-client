@@ -3,7 +3,8 @@
 __oracle_client_dependencies:
   - libc6
   - libc6-dev
-  - libcap
+  - libcap2
+  - libcap-dev
   - gcc
   - g++
   - glibc
