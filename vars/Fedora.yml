@@ -1,11 +1,11 @@
 ---
 
 __oracle_client_dependencies:
-  - libc6
-  - libc6-dev
-  - libcap
+  - binutils
+  - libcap-2.06
   - gcc
-  - g++
+  - gcc-c++
+  - compat-libstdc++-33
   - glibc
   - glibc-devel
   - ksh
