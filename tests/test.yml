@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    oracle_client_install=False
+    oracle_client_install: False
   pre_tasks:
     - name: Update apt cache.
       apt: update_cache=yes
