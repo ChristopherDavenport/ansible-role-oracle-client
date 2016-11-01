@@ -28,7 +28,11 @@
     uid: "{{ __oracle_client_user_id }}"
     group: "{{ __oracle_client_group }}"
 
-- name: Install Oracle Home
+- name: Install Oracle Client
   include: install.yml
-  static: yes
+  static: no
   when: oracle_client_install
+
+- name: Run Configuration For Oracle
+  include: configuration.yml
+  static: yes

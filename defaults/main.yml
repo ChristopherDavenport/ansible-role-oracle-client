@@ -1,6 +1,10 @@
 ---
 
-oracle_client_install: False
+
+#
+# Oracle Client Install Configuration
+#
+oracle_client_install: True
 # This can force the variable to a specific hostname if this is being
 # installed on a machine with multiple hostnames. Otherwise the installer
 # takes for first hostname found.
@@ -86,6 +90,50 @@ oracle_client_version: 12.1.0.2.0
 oracle_client_zip: linuxamd64_12102_client.zip
 
 oracle_client_tmp_install_storage: /tmp/oracleclient
+
+oracle_client_nls_lang: AMERICAN_AMERICA.WE8ISO8859P1
+
+#
+# Oracle Databases
+#
+
+# If oracle_client_has_primary_db values will be taken from the first
+# entry in oracle_client_databases
+oracle_client_has_primary_db: True
+
+# The default values to install a database
+# Without this you wont have much fun but you will still
+# have the oracle_client setup.
+# oracle_client_databases:
+#   - sid: TEST
+#     host: fakedb.christopherdavenport.io
+#     port: 2322
+#     service_name: TEST
+
+# oracle_client_listener_host: fakedb.christopherdavenport.io
+# oracle_client_listener_port: 2322
+
+##### Configuration Defaults
+
+oracle_client_set_oratab: True
+oracle_client_set_tnsnames: True
+
+oracle_client_set_environmental_variables: True
+oracle_client_environment_shell_name: oracle-client.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

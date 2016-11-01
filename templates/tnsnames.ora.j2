@@ -1,0 +1,25 @@
+
+{% if oracle_client_databases is defined %}
+{% for db in oracle_client_databases %}
+{{ db.sid }} =
+  (DESCRIPTION =
+    (ADDRESS =
+      (PROTOCOL = TCP)
+      (HOST = {{ db.host }})
+      (PORT = {{ db.port }})
+    )
+    (CONNECT_DATA=
+      (SERVICE_NAME={{ db.service_name }})
+    )
+  )
+{% endfor %}
+{% endif %}
+
+{% if oracle_client_listener_host is defined and oracle_client_listener_port is defined %}
+LISTENER =
+  (ADDRESS =
+    (PROTOCOL = TCP)
+    (HOST = {{ oracle_client_listener_host }})
+    (PORT = {{ oracle_client_listener_port }})
+  )
+{% endif %}

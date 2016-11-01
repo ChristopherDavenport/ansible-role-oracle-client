@@ -1,0 +1,28 @@
+---
+
+- name: Apply Oratab
+  template:
+    src: oratab.j2
+    dest: /etc/oratab
+    owner: root
+    group: root
+    mode: 0644
+  when: oracle_client_set_oratab
+
+- name: Implement tnsnames.ora
+  template:
+    src: tnsnames.ora.j2
+    dest: "{{ oracle_client_oracle_home }}/network/admin/tnsnames.ora"
+    owner: "{{ __oracle_client_user }}"
+    group: "{{ __oracle_client_group }}"
+    mode: 0644
+  when: oracle_client_set_tnsnames
+
+- name: Set Oracle Client Environmental Variables
+  template:
+    src: oracle-client.sh.j2
+    dest: "/etc/profile.d/{{oracle_client_environment_shell_name}}"
+    owner: root
+    group: root
+    mode: 0644
+  when: oracle_client_set_environmental_variables

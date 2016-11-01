@@ -1,21 +1,18 @@
 ---
 
-- name: Check If Oracle Client Is Installed.
-  command: /usr/local/bin/dbhome
-  register: __oracle_client_init_dbhome
-  changed_when: False
-  ignore_errors: True
+- name: Check whether Oracle Home Exists
+  stat:
+    path: "{{ oracle_client_oracle_home }}"
+  register: __oracle_client_oracle_home
 
-- debug: var=__oracle_client_init_dbhome
+- name: Check whether Oracle Inventory Exists
+  stat:
+    path: "{{ oracle_client_inventory_location }}"
+  register: __oracle_client_inventory_location
 
-- debug: var=oracle_client_oracle_home
-
-- name: Set Whether Installation Is Already Finished
+- name: Set Whether Oracle Client is Already Installed
   set_fact:
-    __oracle_client_installed: "{{ __oracle_client_init_dbhome|succeeded and
-      __oracle_client_init_dbhome == oracle_client_oracle_home }}"
-
-- debug: var=__oracle_client_installed
+    __oracle_client_installed: "{{ __oracle_client_oracle_home.stat.exists and __oracle_client_inventory_location.stat.exists }}"
 
 - name: Create Base App Directory
   file:
@@ -68,22 +65,18 @@
     seconds: 120
   when: not __oracle_client_installed
 
-- debug: var=__oracle_client_installer_result
-
 - name: Check if OraInventoryRoot Script needs to be run
   stat:
-    path: "{{oracle_client_oracle_app_base}}/oraInventory/orainstRoot.sh"
+    path: "{{oracle_client_inventory_location }}/orainstRoot.sh"
   register: __oracle_client_orainst_path
   when: not __oracle_client_installed
 
 - name: Run root orainst scripts
-  command: "{{ oracle_client_oracle_app_base }}/oraInventory/orainstRoot.sh"
+  command: "{{ oracle_client_inventory_location }}/orainstRoot.sh"
   register: __oracle_client_orainstRoot
   when:
     - not __oracle_client_installed
     - __oracle_client_orainst_path.stat.exists
-
-- debug: var=__oracle_client_orainstRoot
 
 - name: Check If Oracle Home Root Script Needs to be Run
   stat:
@@ -97,5 +90,3 @@
   when:
     - not __oracle_client_installed
     - __oracle_client_root_shell_path.stat.exists
-
-- debug: var=__oracle_client_install_rootShell

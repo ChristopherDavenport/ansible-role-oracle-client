@@ -1,0 +1,7 @@
+{# This is the Oratab Generator File #}
+{# For Each Database In the Database list we produce #}
+{% if oracle_client_databases is defined %}
+{% for db in oracle_client_databases %}
+{{ db.sid }}:{{ oracle_client_oracle_home }}:N
+{% endfor %}
+{% endif %}

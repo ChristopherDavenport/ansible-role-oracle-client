@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Universal Variables
+export ORACLE_BASE={{ oracle_client_oracle_base }}
+export ORACLE_HOME={{ oracle_client_oracle_home }}
+export NLS_LANG={{ oracle_client_nls_lang }}
+
+{# If Procobol is being installed apply this variable #}
+PROCOB=$ORACLE_HOME/bin/procob
+if [ -x "$PROCOB" ]; then
+  export PROCOB
+fi
+
+{# If there is a primary database set it so that it will be #}
+{# universally set #}
+{% if oracle_client_has_primary_db and oracle_client_databases is defined %}
+{% for db in oracle_client_databases %}
+{% if loop.first %}
+export ORACLE_SID={{ db.sid }}
+export TWO_TASK={{ db.sid }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+if [ -d "$ORACLE_HOME/bin" ]; then
+  case ${PATH:=""} in
+    *$ORACLE_HOME/bin*) ;;
+    "") PATH=$ORACLE_HOME/bin ;;
+    *:) PATH=${PATH}$ORACLE_HOME/bin ;;
+    *)  PATH=${PATH}:$ORACLE_HOME/bin ;;
+  esac
+fi
+
+export PATH
+
+# Basic Expansion Based On If Variable Is Already Set
+if [ -d "$ORACLE_HOME/lib" ]; then
+  case ${LD_LIBRARY_PATH:=""} in
+    *${ORACLE_HOME}/lib*) ;;
+    "") LD_LIBRARY_PATH=${ORACLE_HOME}/lib ;;
+    *:) LD_LIBRARY_PATH=${LD_LIBRARY_PATH}${ORACLE_HOME}/lib ;;
+    *)  LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ORACLE_HOME}/lib ;;
+  esac
+fi
+
+# Procobol expansion to LD_LIBRARY_PATH
+if [ -d "$ORACLE_HOME/precomp" ]; then
+  case "$LD_LIBRARY_PATH" in
+    *$ORACLE_HOME/precomp/lib*) ;;
+    *) LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ORACLE_HOME}/precomp/lib
+  esac
+fi
+
+# Add $ORACLE_HOME/ctx/lib for Oracle Text
+if [ -d "$ORACLE_HOME/ctx" ]; then
+  case "$LD_LIBRARY_PATH" in
+    *$ORACLE_HOME/ctx/lib*) ;;
+    *) LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ORACLE_HOME}/ctx/lib
+  esac
+fi
+
+if [ -d "$ORACLE_HOME/perl" ]; then
+  case "$LD_LIBRARY_PATH" in
+    *$ORACLE_HOME/perl/lib*) ;;
+    *) LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${ORACLE_HOME}/perl/lib
+  esac
+fi
+
+export LD_LIBRARY_PATH
