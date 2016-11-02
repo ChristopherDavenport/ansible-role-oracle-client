@@ -36,7 +36,7 @@ the first entry in the list of databases.
 oracle_client_has_primary_db: True
 ```
 
-** NO Databases are set in defaults **
+#### NO DATABASES ARE SET BY DEFAULT
 
 You must set this up if you want to install a database. This
 is an example of what the entry should look like. It is not the
