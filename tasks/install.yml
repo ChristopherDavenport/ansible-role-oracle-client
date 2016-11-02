@@ -90,3 +90,9 @@
   when:
     - not __oracle_client_installed
     - __oracle_client_root_shell_path.stat.exists
+
+- name: Remove Temporary Storage Directory
+  file:
+    path: "{{ oracle_client_tmp_install_storage }}"
+    state: directory
+  when: not __oracle_client_installed

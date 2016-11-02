@@ -34,3 +34,20 @@
     group: root
     mode: 0644
   when: oracle_client_set_environmental_variables
+
+- name: Check If Precompiler Installed
+  stat:
+    path: "{{ oracle_client_oracle_home }}/precomp/admin/pcscfg.cfg"
+  register: __oracle_client_precompiler
+
+- name: Check For Location of GCC Libraries for Precompiler
+  command: find /usr/lib/gcc -wholename "*/include"
+  changed_when: false
+  register: __oracle_client_gcc_libraries
+  when: __oracle_client_precompiler.stat.exists
+
+- name: Apply PreCompiler C Template
+  template:
+    src: pcscfg.cfg.j2
+    dest: "{{ oracle_client_oracle_home }}/precomp/admin/pcscfg.cfg"
+  when: __oracle_client_precompiler.stat.exists

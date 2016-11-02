@@ -1,0 +1,11 @@
+sys_include=($ORACLE_HOME/precomp/public)
+include=(/usr/include)
+include=(/usr/local/include)
+{# For Each C Library Found Include it #}
+{% if __oracle_client_gcc_libraries.stdout_lines is defined %}
+{% for library in __oracle_client_gcc_libraries.stdout_lines  %}
+include=({{ library }})
+{% endfor %}
+{% endif %}
+ltype=short
+define=__x86_64__
