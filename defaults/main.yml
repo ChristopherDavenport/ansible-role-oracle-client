@@ -1,10 +1,12 @@
 ---
 
-
 #
 # Oracle Client Install Configuration
 #
 oracle_client_install: True
+oracle_client_zip: linuxamd64_12102_client.zip
+oracle_client_tmp_install_storage: /tmp/oracleclient
+
 # This can force the variable to a specific hostname if this is being
 # installed on a machine with multiple hostnames. Otherwise the installer
 # takes for first hostname found.
@@ -87,10 +89,6 @@ oracle_client_scheduler_agent_port: 1500
 
 oracle_client_version: 12.1.0.2.0
 
-oracle_client_zip: linuxamd64_12102_client.zip
-
-oracle_client_tmp_install_storage: /tmp/oracleclient
-
 oracle_client_nls_lang: AMERICAN_AMERICA.WE8ISO8859P1
 
 #
@@ -117,24 +115,8 @@ oracle_client_has_primary_db: True
 
 oracle_client_set_oratab: True
 oracle_client_set_tnsnames: True
-
 oracle_client_set_environmental_variables: True
 oracle_client_environment_shell_name: oracle-client.sh
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # These are fairly constant values
