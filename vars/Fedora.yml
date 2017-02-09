@@ -5,7 +5,6 @@ __oracle_client_dependencies:
   - libcap
   - gcc
   - gcc-c++
-  - compat-libstdc++-33
   - glibc
   - glibc-devel
   - ksh
