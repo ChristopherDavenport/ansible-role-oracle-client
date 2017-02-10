@@ -41,16 +41,20 @@
 - name: Download compat-libstdc++ libs if EL
   get_url:
     url: ftp://195.220.108.108/linux/centos/7.3.1611/os/x86_64/Packages/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
-    dest: "{{ oracle_client_tmp_install_storage }}"
+    dest: "{{ oracle_client_tmp_install_storage }}/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm"
     owner: "{{ __oracle_client_user }}"
     group: "{{ __oracle_client_group }}"
-  when: ansible_os_family == "RedHat"
+  when:
+    - ansible_os_family == "RedHat"
+    - not __oracle_client_installed
 
 - name: Install compat-libstdc++ libs if EL
-  package:
+  yum:
     name: "{{ oracle_client_tmp_install_storage }}/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm"
-    present: yes
-  when: ansible_os_family == "RedHat"
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - not __oracle_client_installed
 
 - name: Unpack Oracle Client At New Location
   unarchive:
