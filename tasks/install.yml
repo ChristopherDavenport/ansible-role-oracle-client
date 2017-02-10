@@ -38,6 +38,32 @@
     group: "{{ __oracle_client_group }}"
   when: not __oracle_client_installed
 
+- name: Generate Required Swap File For Install
+  command: /bin/dd if=/dev/zero of=/extraswap bs=1M count=200
+  when:
+    - ansible_swaptotal_mb < 1
+    - not __oracle_client_installed
+
+- name: Make swap For Install
+  command: /sbin/mkswap /extraswap
+  when:
+    - ansible_swaptotal_mb < 1
+    - not __oracle_client_installed
+
+- name: Generate Swap File Permissions
+  file:
+    name: "/extraswap"
+    mode: 0600
+  when:
+    - ansible_swaptotal_mb < 1
+    - not __oracle_client_installed
+
+- name: Turn Swap On
+  command: /sbin/swapon /extraswap
+  when:
+    - ansible_swaptotal_mb < 1
+    - not __oracle_client_installed
+
 - name: Download compat-libstdc++ libs if EL
   get_url:
     url: ftp://195.220.108.108/linux/centos/7.3.1611/os/x86_64/Packages/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
@@ -73,7 +99,7 @@
 - name: Install Oracle Client
   become: yes
   become_user: "{{ __oracle_client_user }}"
-  command: "{{ oracle_client_tmp_install_storage }}/client/runInstaller -silent -responseFile {{ oracle_client_tmp_install_storage }}/client.rsp"
+  command: "{{ oracle_client_tmp_install_storage }}/client/runInstaller -silent -noconfig -responseFile {{ oracle_client_tmp_install_storage }}/client.rsp"
   async: 120
   poll: 0
   register: __oracle_client_installer_result
@@ -86,7 +112,7 @@
 
 - name: Check if OraInventoryRoot Script needs to be run
   stat:
-    path: "{{oracle_client_inventory_location }}/orainstRoot.sh"
+    path: "{{ oracle_client_inventory_location }}/orainstRoot.sh"
   register: __oracle_client_orainst_path
   when: not __oracle_client_installed
 
@@ -109,6 +135,20 @@
   when:
     - not __oracle_client_installed
     - __oracle_client_root_shell_path.stat.exists
+
+- name: Turn off Swap File
+  command: /sbin/swapon /extraswap
+  when:
+    - ansible_swaptotal_mb < 1
+    - not __oracle_client_installed
+
+- name: Generate Required Swap File For Install
+  file:
+    name: /extraswap
+    state: absent
+  when:
+    - ansible_swaptotal_mb < 1
+    - not __oracle_client_installed
 
 - name: Remove Temporary Storage Directory
   file:
