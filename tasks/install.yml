@@ -137,7 +137,7 @@
     - __oracle_client_root_shell_path.stat.exists
 
 - name: Turn off Swap File
-  command: /sbin/swapon /extraswap
+  command: /sbin/swapoff /extraswap
   when:
     - ansible_swaptotal_mb < 1
     - not __oracle_client_installed
