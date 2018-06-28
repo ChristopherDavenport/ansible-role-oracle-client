@@ -66,7 +66,7 @@
 
 - name: Download compat-libstdc++ libs if EL
   get_url:
-    url: ftp://195.220.108.108/linux/centos/7/os/x86_64/Packages/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
+    url: http://mirror.centos.org/centos/7/os/x86_64/Packages/compat-libstdc++-33-3.2.3-72.el7.i686.rpm
     dest: "{{ oracle_client_tmp_install_storage }}/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm"
     owner: "{{ __oracle_client_user }}"
     group: "{{ __oracle_client_group }}"
